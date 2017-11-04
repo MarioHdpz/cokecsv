@@ -9,6 +9,7 @@
   "author": "Mario HD",
   "license": "ISC",
   "dependencies": {
-    "csv": "^2.0.0"
+    "csv": "^2.0.0",
+    "fast-csv": "^2.4.1"
   }
 }

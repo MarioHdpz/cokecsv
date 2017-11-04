@@ -20,7 +20,6 @@ csv
      sites.push(data);
  })
  .on("end", function(){
-     console.log("Sites read");
      csv
       .fromStream(stream,  {headers : true})
       .on("data", function(data){
@@ -35,34 +34,42 @@ csv
            });
            
            if(!website || !storeview) {{
-             console.log("WARNING: Can't find storeview forgiven cedi_id: ".data.cedi_id);
+             console.log("WARNING: Can't find storeview for given cedi_id: " + data.cedi_id);
            }}
-        
-          routeCsv.write({
-            'website': website,
-            //'store': website,
-            'storeview': storeview,
-            'postalcode': data['Zip Code'],
-            'settlement': data.Neighborhood,
-            'deliverycode': 'BOTTLER',
-            'deliverydays': data['Delivery days'],
-            //'status': '1',
-            //'code': data['Route Code'] 
-          }
-        );
-          postcodesCsv.write({
-            'postcode': data['Zip Code'],
-            'state': data.State,
-            'municipality': data.District,
-            'city': data.City,
-            'type': 'Colonia',
-            'settlement': data.Neighborhood
-          });
+           
+            routeCsv.write({
+              'website': website,
+              //'store': website,
+              'storeview': storeview,
+              'postalcode': data['Zip Code'],
+              'settlement': data.Neighborhood,
+              'deliverycode': 'BOTTLER',
+              'deliverydays': key(data,9),
+              //'status': '1',
+              //'code': data['Route Code'] 
+            });
+            postcodesCsv.write({
+              'postcode': data['Zip Code'],
+              'state': data.State,
+              'municipality': data.District,
+              'city': data.City,
+              'type': 'Colonia',
+              'settlement': data.Neighborhood
+            });
       })
       .on("end", function(){
-         routeCsv.end();
-         postcodesCsv.end();
-         console.log("Success! Let's go for some beers");
+        routeCsv.end();
+        postcodesCsv.end();
+        console.log("Success! Let's go for some beers");
       });
  });
 
+ var object = {
+   key: function(n) {
+     return this[ Object.keys(this)[n] ];
+   }
+ };
+
+ function key(obj, idx) {
+   return object.key.call(obj, idx);
+ }
