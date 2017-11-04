@@ -2,16 +2,16 @@ var csv = require("fast-csv"),
     fs = require("fs");
 var csvName = process.argv[2];
 var stream = fs.createReadStream("./input/" + csvName + ".csv");
-var routeCsv = csv.format({headers: true, quoteColumns: true});
-var postcodesCsv = csv.format({headers: true, quoteColumns: true});
+var routeCsv = csv.createWriteStream({headers: false, quoteColumns: true, quote:'"'});
+var postcodesCsv = csv.createWriteStream({headers: false, quoteColumns: true, quote:'"'});
 var sites = [];
 
 routeCsv
-    .pipe(fs.createWriteStream("output/routes_" + csvName +".csv"), {headers: true, quoteColumns: true})
+    .pipe(fs.createWriteStream("output/routes_" + csvName +".csv"))
     .on("end", process.exit);
     
 postcodesCsv
-    .pipe(fs.createWriteStream("output/postcodes_" + csvName +".csv"), {headers: true, quoteColumns: true})
+    .pipe(fs.createWriteStream("output/postcodes_" + csvName +".csv"))
     .on("end", process.exit);
 
 csv
@@ -38,19 +38,31 @@ csv
              console.log("WARNING: Can't find storeview forgiven cedi_id: ".data.cedi_id);
            }}
         
-          routeCsv.write([
-            ['website','store','storeview','postalcode','deliveryco','deliverydays','status','settlement','code'], 
-            [website, website, storeview, data['Zip Code'], 'BOTTLER', data['Delivery days'], '1', data.Neighborhood, data['Route Code']]
-          ]);
-          postcodesCsv.write([
-            ['postcode','settlement','type','municipality','state','city'], 
-            [data['Zip Code'], data.Neighborhood, 'Colonia', data.District, data.State, data.City]
-          ]);
-          console.log(data);
+          routeCsv.write({
+            'website': website,
+            //'store': website,
+            'storeview': storeview,
+            'postalcode': data['Zip Code'],
+            'settlement': data.Neighborhood,
+            'deliverycode': 'BOTTLER',
+            'deliverydays': data['Delivery days'],
+            //'status': '1',
+            //'code': data['Route Code'] 
+          }
+        );
+          postcodesCsv.write({
+            'postcode': data['Zip Code'],
+            'state': data.State,
+            'municipality': data.District,
+            'city': data.City,
+            'type': 'Colonia',
+            'settlement': data.Neighborhood
+          });
       })
       .on("end", function(){
          routeCsv.end();
-         console.log("done");
+         postcodesCsv.end();
+         console.log("Success! Let's go for some beers");
       });
  });
 
