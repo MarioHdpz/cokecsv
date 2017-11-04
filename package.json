@@ -1,0 +1,14 @@
+{
+  "name": "cokecsvs",
+  "version": "1.0.0",
+  "description": "Convert coke routes CSV to magento 2 csvs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mario HD",
+  "license": "ISC",
+  "dependencies": {
+    "csv": "^2.0.0"
+  }
+}
