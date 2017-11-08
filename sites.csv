@@ -1,18 +1,19 @@
 website,cedi_id,store_view_code
-ARCAJALISCO,8,cedi_arca_3804
-ARCAJALISCO,10,cedi_arca_3803
-ARCAJALISCO,9,cedi_arca_3802
-ARCAJALISCO,12,cedi_arca_3816
-ARCAJALISCO,13,cedi_arca_3820
-TLALNEPANTLA,20,cedi_kof_tlalnepantla2
-KOF_VDM,16,cedi_kof_mixocac
-KOF_VDM,17,cedi_kof_tlalpan
-KOF_VDM,18,cedi_kof_eulalia
-KOF_VDM,19,cedi_kof_iztacalco
-NAYAR,22,cedi_nayar_nayarit
-KOF_LEON,3,cedi_kof_leon
-KOF_PUEB,15,cedi_kof_puebla
-ARCAMONTERREY,1,cedi_arca_3422
-ARCAMONTERREY,2,cedi_arca_3425
-ARCASALTILLO,14,cedi_arca_3463
-PACHUCA,4,cedi_pachuca
+ARCAJALISCO,8,3804
+ARCAJALISCO,10,3803
+ARCAJALISCO,9,3802
+ARCAJALISCO,11,3819
+ARCAJALISCO,12,3816
+ARCAJALISCO,13,3820
+Tlalnepantla,20,Tlalnepantla 2
+KOF VDM,16,Mixcoac
+KOF VDM,17,Tlalpan
+KOF VDM,18,Eulalia Guzman
+KOF VDM,19,Iztacalco
+Nayar,22,Nayarit
+KOF Leon,3,KOF_Leon
+KOF Puebla,15,KOF Puebla
+ARCAMONTERREY,1,3422
+ARCAMONTERREY,2,3425
+ARCASALTILLO,14,3463
+Pachuca,4,Pachuca

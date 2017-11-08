@@ -23,39 +23,44 @@ csv
      csv
       .fromStream(stream,  {headers : true})
       .on("data", function(data){
-           var website = null,
-               storeview = null;
+        var website = null,
+           storeview = null;
+           zipcode = data['Zip Code'];
+
+        sites.forEach(function (siteData) {
+          if(data.cedi_id == siteData.cedi_id) {
+           website = siteData.website;
+           storeview = siteData.store_view_code;
+          }
+        });
+
+        if(!website || !storeview) {{
+         console.log("WARNING: Can't find storeview for given cedi_id: " + data.cedi_id);
+        }}
+
+        if(zipcode.length < 5) {
+          while(zipcode.length < 5) {
+            zipcode = '0' + zipcode;
+          }
+        }
            
-           sites.forEach(function (siteData) {
-             if(data.cedi_id == siteData.cedi_id) {
-               website = siteData.website;
-               storeview = siteData.store_view_code;
-             }
-           });
-           
-           if(!website || !storeview) {{
-             console.log("WARNING: Can't find storeview for given cedi_id: " + data.cedi_id);
-           }}
-           
-            routeCsv.write({
-              'website': website,
-              //'store': website,
-              'storeview': storeview,
-              'postalcode': data['Zip Code'],
-              'settlement': data.Neighborhood,
-              'deliverycode': 'BOTTLER',
-              'deliverydays': key(data,9),
-              //'status': '1',
-              //'code': data['Route Code'] 
-            });
-            postcodesCsv.write({
-              'postcode': data['Zip Code'],
-              'state': data.State,
-              'municipality': data.District,
-              'city': data.City,
-              'type': 'Colonia',
-              'settlement': data.Neighborhood
-            });
+        routeCsv.write({
+          'website': website,
+          'storeview': storeview,
+          'code': data['Route Code'],
+          'postalcode': zipcode,
+          'settlement': data.Neighborhood,
+          'deliverycode': 'BOTTLER',
+          'deliverydays': key(data,9),
+        });
+        postcodesCsv.write({
+          'postcode': zipcode,
+          'state': data.State,
+          'municipality': data.District,
+          'city': data.City,
+          'type': 'Colonia',
+          'settlement': data.Neighborhood
+        });
       })
       .on("end", function(){
         routeCsv.end();
