@@ -65,7 +65,7 @@ csv
       .on("end", function(){
         routeCsv.end();
         postcodesCsv.end();
-        console.log("Success! Let's go for some beers");
+        console.log("Success! Let's get us some beers");
       });
  });
 
